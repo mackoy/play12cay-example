@@ -1,0 +1,18 @@
+#{extends 'main.html' /}
+#{set title:'People' /}
+
+<h1>People</h1>
+
+<a href="@{People.create()}" class="btn btn-primary">Create</a>
+
+<ul class="index-list">
+#{list items:people, as:'person' }
+  <li>
+    ${person.name}
+    <span class="btns">
+      <a href="@{People.edit(person.id)}" class="btn btn-xs btn-primary">edit</a>
+      <a href="@{People.delete(person.id)}" class="btn btn-xs btn-danger">delete</a>
+    </span>
+  </li>
+#{/list}
+</ul>

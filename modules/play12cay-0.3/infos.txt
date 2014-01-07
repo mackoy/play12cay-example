@@ -1,0 +1,20 @@
+Infos zu Cayenne für Play 1.2.x
+-------------------------------
+
+Modeler
+-------
+- Model-Klassen müssen von der Superklasse PlayDataObject erben
+
+Play
+----
+- Properties conf/application.conf:
+	db.cayenne.conf=conf/cayenne
+	db.driver=org.postgresql.Driver
+	db.url=jdbc:postgresql://localhost:5432/immodb
+	db.user=postgres
+	optional: [db.pass=]
+- Field-Tag (#{field 'object.property'}) unterstützt field.value nicht!
+- Objekte die über eine Aktion reinkommen (per Binder), sind automatisch im EditingContext
+- In Aktionen immer saveChanges() aufrufen (nicht oc().saveChanges())
+- Bei Validierungsproblemen: Ist mehr als ein Objekt im EditingContext?
+- Generelle Probleme: 'play clean' ausgeführt? 'play eclipsify' ausgeführt? Clean in Eclipse ausgeführt?

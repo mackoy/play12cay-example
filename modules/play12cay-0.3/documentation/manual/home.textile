@@ -1,0 +1,91 @@
+h1. Play Cayenne Module
+
+p(note). With Play Cayenne 1.2 Module you can use "Cayenne":http://cayenne.apache.org/ for Database Connections instead of Hibernate
+
+
+
+h2. Getting started
+
+p(note). Set the configuration, then use the "Cayenne Modeler":http://cayenne.apache.org/ to create the Model-Classes, save your Cayenne-Project to ./conf/cayenne/ and you're ready to go!
+
+p(note). Your Models should inherit from the Custom Superclass @models.auto.PlayDataObject@ to have standard Play-Methods (like @findById()@) available.
+
+
+h2. Configuration
+
+h3. db.driver
+
+p(note). Sets the Database driver (e.g. @org.postgresql.Driver@)
+
+h3. db.url
+
+p(note). Sets the Database url (e.g. @jdbc:postgresql://localhost:5432/databasename@)
+
+h3. db.user
+
+p(note). Sets the Database-Username
+
+h3. db.pass
+
+p(note). Sets the Database-Password
+
+h3. db.minConnections
+
+p(note). Set minimum of the ConnectionPool-Size 
+
+h3. db.maxConnections
+
+p(note). Set maximum of the ConnectionPool-Size 
+
+h3. play12cay.legacymode
+
+p(note). If set to true, the Module will run in legacy-Mode (see Usage/Differences between Standard and Legacy-Mode)
+
+h3. play12cay.configurationDelegate
+
+p(note). can be set to a (fully Qualified) class which implements the CayConfigurationDelegate-Interface to override the standard configuration; This allows to have multiple connections (The implementing class may return different configurations)
+
+
+h2. Usage
+
+h3. General Usage
+
+p(note). Every Request-Response loop there is just one ObjectContext and it is reset after each Request/Response-Loop
+
+p(note). Models should inherit from @models.auto.PlayDataObject@ to have standard Play-Methods (like @findById()@) available.
+
+p(note). Controllers should inherit from @controllers.play12cay.CayController@, as there are convienience Methods available (like @oc()@ to get an ObjectContext and @saveChanges()@ to commit your changes)
+
+p(note). When you set the ID of a To-One-Relation to an empty String, the Relation will be cut. E.g. you have form parameters like @person.company.id@; If you set id to a company id, the person will get related with it; If you set the @person.company.id@-Parameter to an empty String, the Relation will be cut off;
+
+p(note). The form parameters for a to-one relationship should be of the form @sourceobj.relationship-name.id@, e.g: @person.company.id@. The value attribute of the form element should be set to the corresponding id value of the relationship destination object. The form paramters for a to-many relationship should be of the form @sourceobj.relationship-name[].id@ where more than one form elements with this same name can appear. To-many relationships can also be of the form @sourceobj.relationship-name[index].id@, where index should be different for every id value. In the case of the form with indices the bound Java list holding the relation destination objects is sorted correspondingly.
+
+h3. Differences between Standard and Legacy-Mode
+
+h4. Standard (non-Legacy) Mode
+
+p(note). Delete to-many relations, if relation is given. Leave it untouched otherwise. To delete every item from a relation, give query string like 'customer.clients[]'
+
+
+h4. Legacy Mode
+
+p(note). Delete to-many relations if relation is given in the query string and does have children, i.e. (an) array subscript(s). Taken an object customer with the relation clients, if a query string 'customer.clients[0].id=73' is given, the relations will be deleted first. When the relation clients does not appear in a query string the relations will be deleted first. If there is only one query string containing the relation clients and it looks like customer.clients the relations will NOT be deleted.
+
+
+h2. Tags
+
+h3. play12cay.select
+
+p(note). Creates a select, multiple select or a checkboxes list form element to modify a to-one or to-many relationship of a Cayenne object. First parameter is the first fraction of the form parameter. The @rel@ parameter is the name of the Cayenne relation of the object given by the @obj@ parameter. The form parameter is constructed from: first parameter + '.' + @rel@ parameter + '.id'. So the first parameter is important for the data binding in the controller handling the request. The @items@ parameter provides a list of objects to be set as relations destination(s). The @labelProperty@ parameter says which property of a item from the @items@ parameter should be used for labeling an item. You can give a String with the @noSelectLabel@ parameter for labeling an option which results, when selected, in having the relation set to nothing. With the @multiple@ parameter set to @true@ or @false@ you can force multiple or single select, which is otherwise determined by the relation type (to-many or to-one). If the @checkboxes@ parameter is set to true, in case of a multiple select render it as list of checkbox instead of a multiple select form element.
+
+
+
+h2. Commands
+
+h3. None
+
+
+
+h2. Sample application
+
+h3. Not available

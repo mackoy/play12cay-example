@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-map xmlns="http://cayenne.apache.org/schema/3.0/modelMap"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cayenne.apache.org/schema/3.0/modelMap http://cayenne.apache.org/schema/3.0/modelMap.xsd"
+  project-version="3.0.0.1">
+	<property name="defaultPackage" value="models"/>
+	<property name="defaultSuperclass" value="PlayDataObject"/>
+	<db-entity name="COMPANY">
+		<db-attribute name="ID" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
+		<db-attribute name="NAME" type="VARCHAR" isMandatory="true" length="255"/>
+	</db-entity>
+	<db-entity name="PERSON">
+		<db-attribute name="ID" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
+		<db-attribute name="ID_COMPANY" type="INTEGER"/>
+		<db-attribute name="NAME" type="VARCHAR" isMandatory="true" length="255"/>
+	</db-entity>
+	<obj-entity name="Company" className="models.Company" dbEntityName="COMPANY" superClassName="PlayDataObject">
+		<obj-attribute name="name" type="java.lang.String" db-attribute-path="NAME"/>
+	</obj-entity>
+	<obj-entity name="Person" className="models.Person" dbEntityName="PERSON" superClassName="PlayDataObject">
+		<obj-attribute name="name" type="java.lang.String" db-attribute-path="NAME"/>
+	</obj-entity>
+	<db-relationship name="people" source="COMPANY" target="PERSON" toMany="true">
+		<db-attribute-pair source="ID" target="ID_COMPANY"/>
+	</db-relationship>
+	<db-relationship name="company" source="PERSON" target="COMPANY" toMany="false">
+		<db-attribute-pair source="ID_COMPANY" target="ID"/>
+	</db-relationship>
+	<obj-relationship name="people" source="Company" target="Person" deleteRule="Deny" db-relationship-path="people"/>
+	<obj-relationship name="company" source="Person" target="Company" deleteRule="Nullify" db-relationship-path="company"/>
+</data-map>

@@ -1,0 +1,39 @@
+#{extends 'main.html' /}
+#{set title:'Edit Company' /}
+
+<h1>Edit Company</h1>
+
+#{form @Companies.update(), role:"form"}
+
+  #{if company.id}
+    <input type="hidden" name="company.id" value="${company.id}" />
+  #{/if}
+  
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text"
+	   name="company.name"
+	   value="${company.name}"
+	   class="form-control${errors.forKey('company.name') ? ' required' : ''}"
+	   />
+    <p class="help-block error">#{error 'company.name' /}</p>
+  </div>
+  
+  <div class="form-group">
+    <label>People</label>
+    <input type="hidden" name="company.people[]" value="" />
+
+    #{play12cay.select 'company',
+                       obj:company,
+                       rel:'people',
+                       items:people,
+                       labelProperty:'name',
+                       noSelectLabel:'- no person -',
+                       class:'form-control'
+                       /}
+  </div>
+
+  <a href="@{Companies.index()}" class="btn btn-default">Cancel</a>  
+  <input type="submit" value="OK" class="btn btn-success" />
+
+#{/form}

@@ -1,0 +1,43 @@
+
+#{if _multiple || (_multiple != false && _obj.getObjEntity().getRelationship(_rel).isToMany()) }
+  <input type="hidden" name="${_arg + '.' + _rel}[]" value="" />
+
+  #{if _checkboxes}
+    <ul ${_id ? ('id="' + _id + '"').raw() : ""} ${_class ? ('class="' + _class + '"').raw() : ""}>
+      #{list items:_items, as:'item'}
+        <li>
+    	  <input type="checkbox"
+    		 name="${_arg + '.' + _rel + '[' + (item_index - 1) + '].id'}"
+    		 value="${item.id}"
+    		 ${_obj.readProperty(_rel)?.contains(item) ? 'checked="checked"'.raw() : "" }
+    		 />
+          ${item.readProperty(_labelProperty)}
+        </li>
+      #{/list}
+    </ul>
+  #{/if}
+  #{else}
+    <select name="${_arg + '.' + _rel + '[].id'}" ${_id ? ('id="' + _id + '"').raw() : ""} ${_class ? ('class="' + _class + '"').raw() : ""} multiple="multiple">
+      #{if _noSelectLabel}
+        <option value="">${_noSelectLabel}</option>
+      #{/if}
+      #{list items:_items, as:'item'}
+        <option value="${item.id}" ${_obj.readProperty(_rel)?.contains(item) ? 'selected="selected"'.raw() : ""}>
+          ${item.readProperty(_labelProperty)}
+        </option>
+      #{/list}
+    </select>
+  #{/else}
+#{/if}
+#{else}
+  <select name="${_arg + '.' + _rel + '.id'}" ${_id ? ('id="' + _id + '"').raw() : ""} ${_class ? ('class="' + _class + '"').raw() : ""}>
+    #{if _noSelectLabel}
+      <option value="">${_noSelectLabel}</option>
+    #{/if}
+    #{list items:_items, as:'item'}
+      <option value="${item.id}" ${_obj.readProperty(_rel)?.id == item.id ? 'selected="selected"'.raw() : ""}>
+        ${item.readProperty(_labelProperty)}
+      </option>
+    #{/list}
+  </select>
+#{/else}

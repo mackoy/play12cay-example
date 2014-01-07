@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<domains project-version="3.0.0.1">
+<domain name="play12cay-example">
+	<map name="play12cay-exampleMap" location="play12cay-exampleMap.map.xml"/>
+
+	<node name="play12cay-exampleNode"
+		 datasource="play12cay-exampleNode.driver.xml"
+		 factory="org.apache.cayenne.conf.DriverDataSourceFactory"
+		 schema-update-strategy="org.apache.cayenne.access.dbsync.CreateIfNoSchemaStrategy">
+			<map-ref name="play12cay-exampleMap"/>
+	 </node>
+</domain>
+</domains>

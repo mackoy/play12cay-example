@@ -1,0 +1,24 @@
+self: play -> play12cay 0.3
+
+require:
+    - play
+    - ashwood -> ashwood 2.0
+    - cayenne-server -> cayenne-server 3.0.2
+    - vpp -> vpp 2.2.1
+
+repositories:
+#    - Custom modules:
+#        type: local
+#        artifact: ${application.path}/../[module]
+#
+#        contains:
+#            - play12cay
+
+    - jar_local: 
+        type:       local 
+        artifact:   "${application.path}/jar/[module]-[revision].jar" 
+        contains: 
+            - vpp
+            - ashwood
+            - cayenne-server
+            

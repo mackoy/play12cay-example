@@ -1,0 +1,12 @@
+# Application dependencies
+
+require:
+    - play
+    - play12cay -> play12cay 0.3
+
+repositories:
+    - modules_local: 
+        type:       local 
+        artifact:   "${application.path}/modules-repo/[module]-[revision].zip" 
+        contains: 
+            - play12cay

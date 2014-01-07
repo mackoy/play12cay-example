@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>#{get 'title' /}</title>
+    <meta charset="${_response_encoding}">
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    #{get 'moreStyles' /}
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+    <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    #{get 'moreScripts' /}
+
+    <style type="text/css">
+      body { padding: 20px; }
+      form { width: 400px; margin-left: 30px; }
+      form .required { background-color: #ff7777; }
+      .index-list { margin-top: 30px; list-style-type: none; width: 300px; }
+      .index-list li { clear: both; margin-top: 5px; }
+      .index-list .btns { float: right; }
+    </style>
+  </head>
+  <body>
+    <a href="@{Application.index()}" class="btn btn-primary">Home</a>
+    <a href="@{People.index()}" class="btn btn-primary">People</a>
+    <a href="@{Companies.index()}" class="btn btn-primary">Companies</a>
+    <hr />
+
+    #{doLayout /}
+  </body>
+</html>
